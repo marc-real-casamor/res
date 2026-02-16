@@ -1,0 +1,146 @@
+I'll explain the logic step by step and convert the `for` loops to `while` loops.
+
+## Original Code Logic
+
+```c
+int height = 5;
+int row, spaces, stars;
+
+for (row = 1; row <= height; row++)
+{
+    // Print leading spaces
+    for (spaces = 0; spaces < height - row; spaces++)
+    {
+        printf(" ");
+    }
+    
+    // Print stars
+    for (stars = 0; stars < (2 * row - 1); stars++)
+    {
+        printf("#");
+    }
+    
+    printf("\n");
+}
+```
+
+## Step-by-Step Explanation
+
+### **Outer Loop (row = 1 to height = 5)**
+Each iteration prints one row of the pyramid.
+
+**Row 1:**
+- `height - row = 5 - 1 = 4` spaces
+- `2 * row - 1 = 2*1 - 1 = 1` star
+- Result: `"    #"`
+
+**Row 2:**
+- `height - row = 5 - 2 = 3` spaces
+- `2 * row - 1 = 2*2 - 1 = 3` stars
+- Result: `"   ###"`
+
+**Row 3:**
+- `height - row = 5 - 3 = 2` spaces
+- `2 * row - 1 = 2*3 - 1 = 5` stars
+- Result: `"  #####"`
+
+**Row 4:**
+- `height - row = 5 - 4 = 1` space
+- `2 * row - 1 = 2*4 - 1 = 7` stars
+- Result: `" #######"`
+
+**Row 5:**
+- `height - row = 5 - 5 = 0` spaces
+- `2 * row - 1 = 2*5 - 1 = 9` stars
+- Result: `"#########"`
+
+## Converted to While Loops
+
+```c
+#include <unistd.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int height = 5;
+    int row = 1;  // Initialize row counter
+    
+    // Outer while loop (replaces: for (row = 1; row <= height; row++))
+    while (row <= height)
+    {
+        int spaces = 0;  // Initialize spaces counter
+        
+        // First inner while loop - prints leading spaces
+        // Replaces: for (spaces = 0; spaces < height - row; spaces++)
+        while (spaces < height - row)
+        {
+            printf(" ");
+            spaces++;  // Increment spaces counter
+        }
+        
+        int stars = 0;  // Initialize stars counter
+        
+        // Second inner while loop - prints stars
+        // Replaces: for (stars = 0; stars < (2 * row - 1); stars++)
+        while (stars < (2 * row - 1))
+        {
+            printf("#");
+            stars++;  // Increment stars counter
+        }
+        
+        printf("\n");
+        row++;  // Increment row counter
+    }
+    
+    return 0;
+}
+```
+
+## Key Differences Between For and While Loops
+
+### **For Loop Structure:**
+```c
+for (initialization; condition; increment) {
+    // body
+}
+```
+
+### **While Loop Equivalent:**
+```c
+initialization;
+while (condition) {
+    // body
+    increment;
+}
+```
+
+## Breakdown of Each Conversion:
+
+1. **Outer Loop Conversion:**
+   - `for (row = 1; row <= height; row++)` becomes:
+     - Move `row = 1` before the while
+     - Condition `row <= height` stays in while()
+     - `row++` moves to the end of the loop body
+
+2. **First Inner Loop (spaces):**
+   - `for (spaces = 0; spaces < height - row; spaces++)` becomes:
+     - `spaces = 0` before the while
+     - Condition `spaces < height - row` stays
+     - `spaces++` moves inside the loop body
+
+3. **Second Inner Loop (stars):**
+   - `for (stars = 0; stars < (2 * row - 1); stars++)` becomes:
+     - `stars = 0` before the while
+     - Condition `stars < (2 * row - 1)` stays
+     - `stars++` moves inside the loop body
+
+## Output (for both versions):
+```
+    #
+   ###
+  #####
+ #######
+#########
+```
+
+Both versions produce identical output - a right-aligned pyramid of height 5.

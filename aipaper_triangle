@@ -1,0 +1,117 @@
+Looking at your code, I can see you're trying to create a triangle pattern, but there are a few issues. The main problem is that `b` is initialized to `-1` outside the loops and never gets reset, so it only works for the first row.
+
+Here's how to fix it to draw a triangle where `A` represents both the base and height:
+
+```c
+#include <unistd.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int a = 0;
+    int b;
+    
+    while (a <= 5) 
+    {
+        b = 0;  // Reset b for each new row
+        while(b < a)
+        {
+            printf("#");
+            b++;
+        }
+        printf("\n");
+        a++;
+    }
+}
+```
+
+**Output:**
+```
+#
+##
+###
+####
+#####
+```
+
+However, if you want `A` to be both the base AND height (meaning the triangle should be symmetrical), you might want an isosceles triangle. Here's a version that creates a symmetrical triangle:
+
+```c
+#include <unistd.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int height = 5;  // A represents both base and height
+    int row, spaces, stars;
+    
+    for (row = 1; row <= height; row++)
+    {
+        // Print leading spaces
+        for (spaces = 0; spaces < height - row; spaces++)
+        {
+            printf(" ");
+        }
+        
+        // Print stars
+        for (stars = 0; stars < (2 * row - 1); stars++)
+        {
+            printf("#");
+        }
+        
+        printf("\n");
+    }
+}
+```
+
+**Output:**
+```
+    #
+   ###
+  #####
+ #######
+#########
+```
+
+**Or if you want to use your original variable names and structure:**
+
+```c
+#include <unistd.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int a = 1;  // Start from 1
+    int b;
+    int spaces;
+    
+    while (a <= 5) 
+    {
+        // Print spaces first
+        spaces = 0;
+        while (spaces < 5 - a)
+        {
+            printf(" ");
+            spaces++;
+        }
+        
+        // Print # characters
+        b = 0;
+        while(b < (2 * a - 1))
+        {
+            printf("#");
+            b++;
+        }
+        
+        printf("\n");
+        a++;
+    }
+}
+```
+
+The key fixes to your original code were:
+1. Move `b = 0` inside the outer loop to reset it for each row
+2. Start `a` from 1 instead of 0 to get proper triangle shape
+3. For a symmetrical triangle, you need to print spaces before the # characters
+
+Choose the version that matches what kind of triangle you want to draw!
