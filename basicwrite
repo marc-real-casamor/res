@@ -1,0 +1,95 @@
+Here's a comparison of `write`, `puts`, and `printf` in C:
+
+## **write()** (System Call)
+```c
+#include <unistd.h>
+ssize_t write(int fd, const void *buf, size_t count);
+```
+- **Low-level system call** - direct interface to the OS
+- **Unbuffered** - writes immediately to file descriptor
+- **Binary-safe** - can handle null bytes (`\0`)
+- **Returns bytes written** or -1 on error
+- **No formatting** - just raw bytes
+- **Requires file descriptor** (1 for stdout)
+
+```c
+write(1, "Hello\n", 6);  // Write to stdout
+```
+
+## **puts()** (Standard Library)
+```c
+#include <stdio.h>
+int puts(const char *s);
+```
+- **Buffered** - uses stdio buffer
+- **Automatically adds newline** - appends `\n`
+- **Not binary-safe** - stops at null terminator
+- **Simpler** - just outputs string
+- **Returns non-negative** on success, EOF on error
+
+```c
+puts("Hello");  // Outputs "Hello\n"
+```
+
+## **printf()** (Standard Library)
+```c
+#include <stdio.h>
+int printf(const char *format, ...);
+```
+- **Buffered** - uses stdio buffer
+- **Formatted output** - supports placeholders (`%d`, `%s`, etc.)
+- **No automatic newline** (unless you add `\n`)
+- **Variable arguments** - can take multiple parameters
+- **Returns characters printed** or negative on error
+
+```c
+printf("Hello %s!\n", "world");  // Outputs "Hello world!\n"
+```
+
+## Key Differences
+
+| Feature | write() | puts() | printf() |
+|---------|---------|---------|----------|
+| **Level** | System call | Library function | Library function |
+| **Buffering** | Unbuffered | Buffered | Buffered |
+| **Formatting** | No | No | Yes |
+| **Newline** | Manual | Automatic | Manual |
+| **Binary-safe** | Yes | No | No |
+| **Speed** | Slower (syscall) | Faster | Slower (parsing) |
+| **Error return** | Bytes written | Non-negative/EOF | Chars printed/negative |
+
+## When to Use Each
+
+- **write()**: 
+  - When you need raw performance for large data
+  - Binary data (images, network packets)
+  - Direct control over file descriptors
+  - Real-time logging (no buffering delay)
+
+- **puts()**:
+  - Simple string output with newline
+  - When you don't need formatting
+  - Cleaner code for fixed strings
+
+- **printf()**:
+  - Formatted output with variables
+  - Complex string construction
+  - Most general-purpose output needs
+
+## Example Comparison
+```c
+// All output "Hello\n" in different ways
+
+// Using write
+write(1, "Hello\n", 6);
+
+// Using puts
+puts("Hello");
+
+// Using printf
+printf("Hello\n");
+printf("%s\n", "Hello");
+```
+
+## Performance Note
+For simple string output, `puts("text")` is generally faster than `printf("text\n")` because `printf` has to parse the format string even when there are no format specifiers.
