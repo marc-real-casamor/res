@@ -1,0 +1,110 @@
+Alright, let’s go through this program step-by-step.  
+
+---
+
+## **1. Purpose of the program**
+It prints all **unique three-digit combinations** using digits `0` through `9`,  
+with the condition that the digits are in **strictly increasing order** (smallest to largest, no repeats),  
+and it separates them with a comma and space, except after the last combination.
+
+Example output:  
+`012, 013, 014, ..., 789`  
+(but starting from `012` because we start with `n=48`, `m=49`, `l=50` — more on that soon.)
+
+---
+
+## **2. Variables and ASCII values**
+In C, characters are represented by numbers (ASCII codes).  
+- `48` is ASCII for `'0'`  
+- `49` is ASCII for `'1'`  
+- `50` is ASCII for `'2'`  
+- `57` is ASCII for `'9'`
+
+So `n`, `m`, `l` are integers, but they’re treated as **characters** when printed with `putchar`.
+
+---
+
+## **3. Loop ranges**
+```c
+for (n = 48; n < 58; n++)
+```
+`n` goes from `'0'` to `'9'` (ASCII 48 to 57).
+
+```c
+for (m = 49; m < 58; m++)
+```
+`m` starts at `'1'` (ASCII 49), so `m` is always **at least 1**.
+
+```c
+for (l = 50; l < 58; l++)
+```
+`l` starts at `'2'` (ASCII 50), so `l` is always **at least 2`.
+
+---
+
+## **4. The condition `if (l > m && m > n)`**
+This ensures **strictly increasing order** and **all digits different**.  
+Examples:  
+- `n=48('0'), m=49('1'), l=50('2')` → `l > m` (2 > 1) and `m > n` (1 > 0) → true → prints `012`.  
+- `n=48('0'), m=49('1'), l=49('1')` → `l > m` is false (1 > 1 false) → skipped.
+
+So only combinations like 012, 013, 014, ..., 789 are printed.
+
+---
+
+## **5. Printing**
+Inside the `if`:
+```c
+putchar(n);
+putchar(m);
+putchar(l);
+```
+This prints the three digits as characters.
+
+---
+
+## **6. Comma and space logic**
+```c
+if (n != 55 || m != 56)
+```
+- `55` is ASCII for `'7'`  
+- `56` is ASCII for `'8'`
+
+The last combination printed is `789` (because after that, `n` can’t be < `m` < `l` within 0–9).  
+So `n=55('7')`, `m=56('8')`, `l=57('9')` is the **last** valid combination.
+
+The condition `n != 55 || m != 56` means:  
+“If `n` is not `'7'` **OR** `m` is not `'8'`, print comma and space.”
+
+For the last combination (`789`):  
+`n = 55`, `m = 56` → `n != 55` is false, `m != 56` is false → `false || false` = false →  
+so comma and space are **not** printed after `789`.
+
+For any other combination, at least one of `n != 55` or `m != 56` is true → print comma and space.
+
+---
+
+## **7. End of program**
+After loops finish, print a newline `\n` and return 0.
+
+---
+
+## **8. Example walk-through**
+First iteration:  
+`n=48('0')`, `m=49('1')`, `l=50('2')` → condition true → print `012` →  
+`n` is not 55 → true → print `, `.
+
+Next: `n=48('0'), m=49('1'), l=51('3')` → print `013, `, etc.
+
+Eventually:  
+`n=55('7'), m=56('8'), l=57('9')` → print `789` → no comma/space after.
+
+---
+
+## **9. Summary in simple terms**
+1. It picks three digits from `0` to `9`.
+2. It only prints them if they are in increasing order with no repeats.
+3. It separates each set with `, ` except after the last one (`789`).
+4. It prints them as characters, not numbers.
+
+This is a common exercise for practicing loops and ASCII handling in C.
