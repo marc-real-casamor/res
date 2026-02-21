@@ -1,0 +1,51 @@
+## K&R's View on Constants in C
+
+### Core Philosophy
+K&R treat constants as **compile-time values** that provide:
+- **Type safety** (unlike preprocessor macros)
+- **Compiler optimization opportunities**
+- **Readability** through named values
+
+### Two Primary Forms
+1. **Literal Constants**
+   ```c
+   123, 3.14, 'A', "string"
+   ```
+   - Have implicit types (int, double, char, char*)
+   - Can be written in various bases (octal, hex)
+
+2. **Named Constants**
+   - **`#define`** (preprocessor):
+     ```c
+     #define MAXLINE 1000
+     ```
+     - Text substitution, no type checking
+     - K&R use extensively in early examples
+
+   - **`const` qualifier** (ANSI C addition):
+     ```c
+     const double pi = 3.14159;
+     ```
+     - Type-safe, stored in memory
+     - Mentioned in later editions as preferred
+
+### Key Insights from K&R
+- **Prefer `#define` for simple numeric constants** in early C
+- **Enumeration constants** (`enum`) for related integer values:
+  ```c
+  enum boolean { NO, YES };
+  ```
+- **Character constants** are small integers (ASCII values)
+- **String constants** are stored as character arrays with `\0` terminator
+- **Constants enable portability** when hardware values differ
+
+### Practical Doctrine
+1. **Use symbolic names** instead of "magic numbers"
+2. **Constants make code self-documenting**
+3. **Compiler can check const correctness** (ANSI C onward)
+4. **Preprocessor constants** still useful for conditional compilation
+
+### The Prophetic Wisdom
+K&R emphasized constants as **abstraction tools**—hiding actual values while revealing intent. Their approach evolved from preprocessor macros toward type-safe `const`, showing C's progression toward stronger typing while maintaining backward compatibility.
+
+**Memorable quote essence**: "Names are better than numbers; types are better than text substitution."

@@ -1,0 +1,62 @@
+Here's a concise summary of K&R's doctrine on Character I/O from "The C Programming Language":
+
+## **Core Philosophy**
+K&R treats character I/O as the **fundamental layer** of all input/output. Text streams are sequences of characters; mastering character I/O means mastering C's I/O system.
+
+## **The Two Essential Functions**
+
+### **`getchar()`**
+- Returns next character from **standard input** as `int` (not `char`!)
+- Returns `EOF` (typically -1) on end-of-file or error
+- **Why `int` not `char`?** Must distinguish `EOF` from valid character data
+- Buffered input: user types line, presses Enter, then `getchar()` consumes
+
+### **`putchar(c)`**
+- Writes character `c` to **standard output**
+- Takes `int` argument, outputs as unsigned char
+
+## **Key Patterns & Idioms**
+
+### **The Universal Input Loop**
+```c
+int c;
+while ((c = getchar()) != EOF) {
+    putchar(c);
+}
+```
+- **Note:** Parentheses around `c = getchar()` are crucial
+- This copies input to output until EOF
+
+### **Character Counting**
+```c
+long nc = 0;
+while (getchar() != EOF)
+    ++nc;
+```
+- Demonstrates K&R's preference for concise, elegant loops
+
+## **Doctrinal Points**
+
+1. **Text Streams are Universal** - Files, keyboards, terminals all appear as character streams
+2. **EOF is a State, Not a Character** - A condition, not data in the stream
+3. **Buffering is Invisible** - Programs act on streams, not keystrokes
+4. **Portability Through Abstraction** - Character I/O works everywhere
+5. **Simplicity is Power** - With just `getchar()`/`putchar()`, you can build any text processing tool
+
+## **Canonical Example (K&R p. 17)**
+The line-counting program embodies their approach:
+```c
+#include <stdio.h>
+int main() {
+    int c, nl = 0;
+    while ((c = getchar()) != EOF)
+        if (c == '\n')
+            ++nl;
+    printf("%d\n", nl);
+}
+```
+
+## **The Prophet's Wisdom**
+K&R show that **all complex I/O reduces to character operations**. Master this layer, and files, formatting, and parsing become manageable. Their approach emphasizes understanding the **abstraction** (streams of characters) rather than implementation details.
+
+**Memorize:** "`getchar()` returns `int`, compare to `EOF`, process in loop" - this is the mantra of C character I/O.

@@ -1,0 +1,67 @@
+## K&R's Doctrine on C Program Structure
+
+### Core Philosophy
+**"C is a small language that provides direct access to the machine."**  
+Programs should be **minimal, clear, and efficient**—no unnecessary abstraction.
+
+### The Skeletal Template
+Every C program is built from:
+1. **Functions** as the primary building blocks
+2. **Variables** declared before use
+3. **Statements** executed sequentially
+4. **Expressions** combining values
+
+### The Canonical Form
+```c
+#include <stdio.h>          /* Headers first */
+#include <stdlib.h>
+
+/* Function declarations (prototypes) */
+int helper(int x);
+
+/* Global variables (used sparingly) */
+int global_counter = 0;
+
+/* main() - the required entry point */
+int main(void)              /* 'void' explicitly indicates no parameters */
+{
+    /* Local variables at block start */
+    int local_var = 0;
+    
+    /* Statements */
+    printf("Hello, world\n");
+    
+    return 0;               /* 0 indicates success to OS */
+}
+
+/* Function definitions follow main() */
+int helper(int x)
+{
+    return x + 1;
+}
+```
+
+### Key Structural Principles
+1. **One-pass compilation**: Declare before use (hence prototypes)
+2. **Functions over macros**: Prefer functions for clarity
+3. **Minimal scoping**: Variables visible only where needed
+4. **Whitespace as clarity**: Consistent indentation (they used 4 spaces)
+5. **Comments for why, not what**: Code should be self-explanatory
+
+### The K&R Style Hallmarks
+- **Braces placement**: Opening brace on same line, closing on own line
+- **No redundancy**: Avoid `return 0;` in main() if compiler supports C99+
+- **Economy of expression**: Favor `while` over `for` when simpler
+- **Pointer-centric thinking**: Arrays decay to pointers; embrace it
+
+### The Prophetic Insight
+"The structure of a C program reflects the **structure of the computation** rather than the structure of the data."  
+This inverted the then-dominant data-first thinking, making C uniquely suited for systems programming.
+
+### Study This Mantra
+"Write clearly, don't be too clever, let the machine do the work."
+
+---
+
+**Summary for manual notes**:  
+*Functions as units, minimal ceremony, declarations before use, main() as entry, braces K&R style, pointers as fundamental, clarity over cleverness.*

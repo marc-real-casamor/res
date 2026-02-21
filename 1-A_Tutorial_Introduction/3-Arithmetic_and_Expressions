@@ -1,0 +1,46 @@
+## K&R's Doctrine on Arithmetic & Expressions
+
+### Core Philosophy
+**C treats hardware as truth** – arithmetic mirrors the machine. No hand-holding; operations behave as the underlying hardware does.
+
+### Key Principles
+
+1. **Type Hierarchy Matters**
+   - `char` → `int` → `unsigned` → `long` → `float` → `double`
+   - Mixed types? Everything promotes to the "higher" type automatically
+   - `char` and `short` vanish in expressions → become `int` immediately
+
+2. **Integers Rule, Floating-Point Follows**
+   - Integer arithmetic is primary, precise, fast
+   - Floating-point is the exception – mixing with integers converts to float
+   - Division: `5/2 = 2` (integer), `5.0/2 = 2.5` (float)
+
+3. **Unsigned is Contagious**
+   - Mix `unsigned` with `int`? Everything becomes `unsigned`
+   - `-1 > 0U` is **true** – surprising but logical to the machine
+
+4. **No Defined Overflow**
+   - Integer overflow? Whatever the hardware says
+   - Signed overflow = undefined behavior (anything can happen)
+   - Unsigned overflow = wrap-around (mathematical modulo)
+
+5. **Expressions are Values**
+   - `a = b = c = 0` works – assignments are expressions too
+   - Side effects (`++`, `--`) can happen anytime during execution
+   - Sequence points (`,`, `;`, `&&`, `||`) control when side effects occur
+
+6. **Pointers are Just Numbers**
+   - `p + 1` adds `sizeof(*p)` automatically
+   - Pointer subtraction yields integer offsets
+   - Array indexing `a[i]` ≡ `*(a + i)` – symmetric and elegant
+
+### The Prophet's Warning
+> "C is not a forgiving language. If you make a mistake, it will bite you. The understanding of expressions and arithmetic is not for comfort, but for control."
+
+### Study This
+- The "usual arithmetic conversions" diagram (Fig 2.3 in K&R)
+- How `++` and `--` differ in prefix/postfix positions
+- Why `float f = 1/3;` gives `0.0` but `float f = 1.0/3;` works
+- The difference between `(float)5/2` and `(float)(5/2)`
+
+K&R's arithmetic is **transparent, not safe** – you see the machine's soul through it. Master this, and you master C's essence.

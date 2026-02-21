@@ -1,0 +1,63 @@
+## K&R's Doctrine on Character Arrays (Strings)
+
+### Core Philosophy
+**"In C, a string is a null-terminated character array."**  
+K&R treat strings not as a distinct type but as a *convention*: an array of `char` ending with `'\0'`. This design reflects C's minimalist philosophy—no built-in string type, just efficient memory manipulation.
+
+### Key Principles from "The C Programming Language"
+
+1. **Declaration & Initialization**
+   ```c
+   char str[] = "hello";  // Compiler counts chars + null terminator
+   char *p = "world";     // Pointer to string literal (immutable)
+   ```
+   - Array size can be omitted for initialized strings
+   - String literals are null-terminated automatically
+
+2. **The Null Terminator Doctrine**
+   - Every library function assumes `'\0'` marks string end
+   - Manual termination required for constructed strings:
+   ```c
+   char s[10];
+   s[0] = 'a';
+   s[1] = '\0';  // Essential!
+   ```
+
+3. **Library Functions Pattern**
+   K&R's standard library functions follow consistent patterns:
+   - Return pointers to facilitate chaining
+   - Expect caller to manage memory bounds
+   - Example: `strcpy(dest, src)` assumes `dest` has enough space
+
+4. **Pointer vs Array Mindset**
+   - Equivalent notations: `str[i]` ↔ `*(str+i)`
+   - But crucial difference: arrays are *address constants*, pointers are variables
+   - K&R favor pointer arithmetic for efficiency
+
+5. **Common Idioms**
+   ```c
+   // String copy (K&R style)
+   void strcpy(char *s, char *t) {
+       while (*s++ = *t++);  // Classic: assignment in condition
+   }
+   
+   // String length
+   int strlen(char *s) {
+       char *p = s;
+       while (*p != '\0') p++;
+       return p - s;
+   }
+   ```
+
+### Warnings & Wisdom
+- **No bounds checking**: "It is the programmer's responsibility."
+- **String literals are read-only**: Modifying them causes undefined behavior
+- **Array decay**: When passed to functions, arrays become pointers (lose size info)
+- **Memory management**: Stack arrays vs dynamic allocation (`malloc` + `free`)
+
+### The K&R Ethos
+Strings exemplify C's design: **trust the programmer, provide minimal abstraction, prioritize efficiency over safety**. The null-terminator convention enables simplicity and speed but demands vigilance—a tradeoff central to C's philosophy.
+
+**Memorable quote**: "C treats strings as arrays of characters conventionally terminated by a marker." (K&R, §5.5)
+
+This doctrine empowers but also requires discipline—the programmer becomes the enforcer of string integrity.

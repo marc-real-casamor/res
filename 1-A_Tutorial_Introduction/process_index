@@ -1,0 +1,16 @@
+Here is a simple list of the important elements covered in Chapter 1 of K&R:
+
+1. **Basic Program Structure** – `main()` function, `#include`, `printf()`
+2. **Variables & Data Types** – `int`, `float`, `char`
+3. **Arithmetic & Expressions** – Basic math, type conversions
+4. **Control Flow** – `while` loop, `for` loop
+5. **Constants** – `#define` for symbolic constants
+6. **Character I/O** – `getchar()` and `putchar()` for stream processing
+7. **Arrays** – Storing and accessing sequences of data
+8. **Functions** – Defining, calling, and returning values
+9. **Call by Value** – How arguments are passed to functions
+10. **Character Arrays (Strings)** – Null-terminated strings (`'\0'`)
+11. **External Variables & Scope** – Global vs. local variables, `extern`
+12. **Operators** – Increment (`++`), decrement (`--`), assignment (`=`), etc.
+
+These form the essential toolkit introduced in the tutorial chapter.

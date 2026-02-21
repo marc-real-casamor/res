@@ -1,0 +1,33 @@
+## K&R's Philosophy on Control Flow
+
+Kernighan and Ritchie treat control flow as **the skeletal structure of program logic**—minimal, predictable, and close to the machine. Their approach in "The C Programming Language" reflects several core principles:
+
+### 1. **Spartan Minimalism**
+- Only what's necessary: `if`, `if-else`, `while`, `for`, `do-while`, `switch`, `break`, `continue`, and `goto`.
+- No `foreach`, `until`, or `unless`—control structures map directly to hardware capabilities (branching, jumping).
+
+### 2. **Expression-Oriented Thinking**
+- Most control constructs return values, blending statements and expressions.
+- The `for` loop is celebrated as a flexible "universal loop":  
+  `for (initialize; test; increment)` encapsulates loop control in one line.
+- Even assignment within conditions is encouraged (`while ((c = getchar()) != EOF)`).
+
+### 3. **Structured Programming with an Escape Hatch**
+- They advocate structured flow (`while`, `for`) but retain `goto` for:
+  - Breaking from nested loops
+  - Error cleanup patterns
+- This reflects practical engineering: structure when possible, escape when necessary.
+
+### 4. **Fall-Through as Feature**
+- `switch` case fall-through is intentional, not a bug.
+- Requires explicit `break`—programmer must *choose* flow, compiler won't guess.
+
+### 5. **Zero Magic**
+- No implicit loops or iterators.
+- No pattern matching.
+- Flow control is explicit, visual, and traceable—you see exactly where execution jumps.
+
+### The Doctrine in One Sentence:
+**"Give the programmer direct, transparent control over execution flow—no hidden mechanisms, just a minimal set of sharp tools that map cleanly to machine logic."**
+
+This philosophy treats the programmer as a conscious architect of execution paths, responsible for both structure and controlled deviation. It’s C’s way of saying: *You’re in charge—no hand-holding, no surprises.*

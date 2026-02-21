@@ -1,0 +1,57 @@
+## K&R's Doctrine on Variables in C
+
+### **Core Philosophy**
+Variables in C are **named storage locations** whose **type determines interpretation** of bits. K&R treat variables as fundamental but minimal abstractions—they’re essentially **typed chunks of memory** with symbolic names for programmer convenience.
+
+### **Key Principles**
+
+1. **Declaration Before Use**
+   - All variables must be declared with type before use
+   - Declarations specify **type** and **storage class** (automatic, static, etc.)
+   - Example: `int count;` or `extern char line[];`
+
+2. **Storage Classes Define Lifetime**
+   - **Automatic** (`auto`): Local to block, created/destroyed on entry/exit
+   - **Static** (`static`): Persistent across function calls, private to scope
+   - **External** (`extern`): Defined elsewhere, visible across files
+   - **Register** (`register`): Hint to place in register (optimization)
+
+3. **Initialization Matters**
+   - Static/external variables default to zero
+   - Automatic variables start with **garbage** unless explicitly initialized
+   - K&R emphasize: *"Uninitialized variables are a common source of bugs"*
+
+4. **Scope Rules**
+   - Variables exist from point of declaration to end of block
+   - External variables have **file scope** (can be made global with `extern`)
+   - No variable hiding in same scope—redeclaration is an error
+
+5. **Type System Simplicity**
+   - Basic types: `char`, `int`, `float`, `double` (plus qualifiers)
+   - Derived types: pointers, arrays, structures, unions
+   - **No Boolean type**—zero is false, non-zero is true
+   - **No string type**—just `char` arrays with `\0` terminator
+
+### **Prophetic Insights**
+- **Variables as raw memory access**: C exposes the machine—variables map directly to memory operations
+- **Minimal runtime support**: Variable management happens at compile/link time
+- **Programmer responsibility**: You manage scope, lifetime, and initialization
+- **Efficiency first**: Design favors speed over safety (no bounds checking, no auto-initialization)
+
+### **Canonical Example**
+```c
+int global = 1;          /* external, initialized */
+
+void function(void) {
+    static int persistent = 0;  /* retains value between calls */
+    auto int temporary;         /* garbage value here */
+    register int i;             /* optimization hint */
+    
+    temporary = 2;              /* must initialize manually */
+}
+```
+
+### **The Doctrine in One Sentence**
+*"Variables are named, typed memory regions whose behavior you must explicitly control—the machine trusts you to manage them wisely."*
+
+This reflects C's philosophy: give programmers maximum control with minimal abstraction, accepting that with great power comes great responsibility for correctness.

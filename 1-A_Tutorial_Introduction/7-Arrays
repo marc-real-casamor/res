@@ -1,0 +1,48 @@
+Here's the essence of K&R's doctrine on arrays in C:
+
+## Core Philosophy
+Arrays in C are **not first-class objects**—they are **conceptual**. What truly exists in memory are **contiguous elements**, and the array name is syntactic sugar for the address of the first element.
+
+## Key Doctrines
+
+1. **Array ≈ Pointer (but not identical)**
+   - `a[i]` is defined as `*(a + i)`
+   - Array name `a` becomes a pointer to `a[0]` in most expressions
+   - Exception: `sizeof(a)` gives total array size, not pointer size
+   - Exception: `&a` yields address of entire array (different type)
+
+2. **No Bounds Checking**
+   - C trusts the programmer completely
+   - `a[10]` on a 5-element array compiles without complaint
+   - "The programmer is in charge; the compiler is not your nanny"
+
+3. **Arrays Decay to Pointers**
+   - When passed to functions, arrays become pointers
+   - `void f(int arr[])` is actually `void f(int *arr)`
+   - Size information is lost—must pass it separately
+
+4. **Multidimensional Arrays are Arrays of Arrays**
+   - `int arr[3][4]` is 3 consecutive groups of 4 ints
+   - `arr[i][j]` ≡ `*(*(arr + i) + j)`
+   - Only first dimension can be omitted in function parameters
+
+5. **Initialization Rules**
+   - `int a[5] = {1, 2, 3};` → last two elements are zero
+   - `int a[] = {1, 2, 3};` → size determined by initializer
+   - String literals: `char s[] = "hello";` includes null terminator
+
+6. **Strings are Char Arrays**
+   - No separate string type
+   - Convention: null-terminated character arrays
+   - Library functions (`strcpy`, `strlen`) rely on this convention
+
+## The Prophet's Wisdom
+K&R treat arrays as **efficient abstractions over pointer arithmetic**. The simplicity is deliberate: arrays are just memory with convenient notation. This gives power but demands responsibility—the programmer must manage all boundaries and sizes.
+
+## Mnemonic Mantra
+"Arrays decay to pointers, except when they don't.
+Bounds are yours to keep, by the compiler they're forgot.
+Multidimensional means arrays of arrays in sequence,
+And strings are just chars with a null for termination's frequence."
+
+This minimalistic design reflects C's philosophy: provide simple, predictable primitives that compile to efficient machine code, leaving higher-level abstractions to the programmer or libraries.

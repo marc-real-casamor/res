@@ -1,0 +1,45 @@
+## K&R's Doctrine on Functions
+
+**Core Philosophy:**  
+Functions are the fundamental building blocks of C programs. A C program is a collection of functions, with `main()` as the required entry point.
+
+**Key Teachings:**
+
+1. **Functions as Black Boxes**  
+   - Each function should perform a single, well-defined task
+   - Implementation details should be hidden from users
+   - Interface (arguments, return value) is all users need to know
+
+2. **The "Return-At-Least-One-Value" Principle**  
+   - Functions communicate primarily through return values
+   - Arguments are passed *by value* (copies), not by reference
+   - To modify arguments, pass pointers explicitly
+
+3. **External Variables as Necessary Evil**  
+   - Used for shared data when argument passing is impractical
+   - But: "Variables should be declared in the smallest scope possible"
+   - Warning: Excessive use leads to tangled dependencies
+
+4. **Function Prototypes as Contracts**  
+   - Declare functions before use (though K&R-style declarations predate ANSI)
+   - Return type defaults to `int` if unspecified (historical context)
+   - Modern take: Always declare full prototypes for type safety
+
+5. **Recursion is Legitimate but Not Magical**  
+   - Supported but not emphasized as in functional languages
+   - Useful for certain algorithms (tree traversal, quicksort)
+   - Iterative solutions often preferred for efficiency
+
+**The K&R Aesthetic:**
+- Functions should be short enough to view entirely on one screen
+- If a function grows too long, it should probably be split
+- Function names should be verbs describing actions (`calculate`, `print`, `compare`)
+- Library functions demonstrate ideal form: focused, reusable, well-specified
+
+**Memorable Quote Essence:**  
+"Functions break large computing tasks into smaller ones, and enable you to build on what others have done instead of starting from scratch."
+
+**Practical Mantra:**  
+"Let the function do one thing, do it well, and hide how it does it."
+
+This doctrine elevates functions from mere code organization to the primary means of abstraction in C—the mechanism for managing complexity in a language close to the machine.

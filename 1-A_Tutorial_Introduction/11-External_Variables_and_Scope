@@ -1,0 +1,49 @@
+## K&R on External Variables & Scope
+
+### Core Doctrine
+External variables (global variables) are **declared outside functions** and exist for the program's entire lifetime. Their scope extends **from declaration point to file end**, accessible by any following function.
+
+### Key Principles from K&R (C Programming Language, 2nd Ed.)
+
+1. **Persistence & Accessibility**
+   - External variables retain values permanently
+   - Available to all functions after their declaration
+   - Example: `int maxline;` (outside functions) vs `auto int maxline;` (inside)
+
+2. **Declaration vs Definition**
+   - **Declaration**: Announces type (`extern int var;`)
+   - **Definition**: Allocates storage (`int var;`)
+   - K&R: "A declaration announces the properties; a definition causes storage allocation"
+
+3. **The `extern` Keyword**
+   - Used to access external variables across files
+   - Tells compiler: "This variable exists elsewhere"
+   - Without `extern`, you create a new variable (may cause linker errors)
+
+4. **Initialization**
+   - External variables initialize to **zero by default**
+   - Unlike automatic variables (garbage values)
+   - Can be explicitly initialized: `int count = 0;`
+
+5. **Program Structure Philosophy**
+   - K&R favored **communicating through arguments/return values** over external variables
+   - But acknowledged practical uses:
+     - Shared constants (`#define` better for true constants)
+     - Large data structures avoiding copy overhead
+     - Multiple return values (via modification)
+
+6. **Warnings in the Text**
+   - "They are always permanent... can be used instead of argument lists"
+   - "But this is dangerous - may lead to programs with too many data connections"
+   - "Relying too heavily on external variables is fraught with peril"
+
+### K&R's Balanced View
+While providing the mechanism, K&R subtly discouraged overuse:
+- **Use when necessary**: Large data, many functions need access
+- **Avoid when possible**: Makes programs harder to understand
+- **Style preference**: Functions should be self-contained where practical
+
+### The Prophet's Wisdom
+The C designers gave you power (external variables) but expected discretion. Their doctrine: *"Program structure should make data relationships clear, and external variables can obscure them."* Use globals sparingly, document thoroughly, and prefer function interfaces for maintainability.
+
+**Memorable quote essence**: "External variables remain in existence permanently... but programs with many external variables are difficult to manage."

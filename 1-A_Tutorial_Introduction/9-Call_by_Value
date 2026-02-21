@@ -1,0 +1,21 @@
+Here's the essence of K&R's take on call-by-value in C, distilled for study:
+
+## Core Doctrine
+C **strictly** uses call-by-value: when a function is called, the **value** of each argument is copied into the function's parameter variables. The function receives copies, not the original variables.
+
+## Key Implications
+1. **No direct modification**: A function cannot alter the actual argument variables in the caller
+2. **Pointer workaround**: To modify external data, you must pass **pointers to values**, not values themselves
+3. **Arrays are special**: Array names are passed as pointers to the first element (technically still call-by-value, but the value is an address)
+
+## K&R's Wisdom
+- "All function arguments are passed 'by value'" (K&R 2nd Ed., §1.8)
+- This choice creates simplicity and clarity: parameters are local variables initialized by the call
+- To modify variables in the caller: `swap(&a, &b)` not `swap(a, b)`
+- The pointer workaround is **intentional**—it makes data flow explicit
+
+## Memory Aid
+> "C gives you copies of values;  
+> Want to change the source? Pass its **address**."
+
+This design reflects C's philosophy: give programmers control while maintaining transparency about what's happening at the machine level.
